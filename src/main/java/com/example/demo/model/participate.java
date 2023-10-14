@@ -6,8 +6,8 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "person_activity")
-public class PersonActivity {
+@Table(name = "participate")
+public class participate {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,9 +22,5 @@ public class PersonActivity {
     @JoinColumn(name = "activity_id")
     private Activity activity;
 
-    @Column(name = "date_time_add")
-    private Date dateTimeAdd;
 
-    
-    // getters and setters
 }
