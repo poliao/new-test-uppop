@@ -1,6 +1,8 @@
 package com.example.demo.model;
 
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -16,8 +18,11 @@ public class Activity {
     @Column(name = "ID_activity")
     private Long idActivity;
 
-    @Column(name = "date_time")
-    private String dateTime;
+    @Column(name = "date")
+    private LocalDate date;
+
+    @Column(name = "time")
+    private LocalTime time;
 
     @Column(name = "location")
     private String location;
