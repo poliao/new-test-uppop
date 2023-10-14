@@ -3,6 +3,7 @@ package com.example.demo.model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -18,11 +19,17 @@ public class Activity {
     @Column(name = "ID_activity")
     private Long idActivity;
 
-    @Column(name = "date")
-    private LocalDate date;
+    @Column(name = "date_start")
+    private LocalDate date_Start;
 
-    @Column(name = "time")
-    private LocalTime time;
+    @Column(name = "time_start")
+    private LocalTime time_Start;
+
+    @Column(name = "date_end")
+    private LocalDate date_end;
+
+    @Column(name = "time_end")
+    private LocalTime time_end;
 
     @Column(name = "location")
     private String location;
@@ -33,8 +40,10 @@ public class Activity {
     @Column(name = "category")
     private String category;
 
+    @ElementCollection
+    @CollectionTable(name = "activity_detail", joinColumns = @JoinColumn(name = "activity_id"))
     @Column(name = "detail")
-    private String detail;
+    private List<String> detail;
 
     // getters and setters
 }

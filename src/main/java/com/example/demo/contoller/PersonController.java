@@ -3,12 +3,16 @@ package com.example.demo.contoller;
 
 import com.example.demo.model.Person;
 import com.example.demo.repository.PersonRepository;
+import jakarta.persistence.EntityNotFoundException;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:8081")
 @RestController
@@ -17,6 +21,7 @@ public class PersonController {
 
     @Autowired
     private PersonRepository personRepository;
+
 
     // API สำหรับการเพิ่ม Person
     @PostMapping("/add")
@@ -62,4 +67,22 @@ public class PersonController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody Map<String, String> credentials) {
+        String username = credentials.get("username");
+        String password = credentials.get("password");
+
+        try {
+            Optional<Person> personOptional = Optional.ofNullable(personRepository.findByUsernameAndPassword(username, password));
+
+            if (personOptional.isPresent()) {
+                return new ResponseEntity<>("Login successful", HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("Invalid username or password", HttpStatus.UNAUTHORIZED);
+            }
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>("Invalid username or password", HttpStatus.UNAUTHORIZED);
+        }
+    }
+
 }

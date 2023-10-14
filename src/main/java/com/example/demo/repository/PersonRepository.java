@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PersonRepository extends JpaRepository<Person, Long> {
-    // คุณสามารถเพิ่มเมธอดเพิ่มเติมตามต้องการ
+    Person findByUsernameAndPassword(String username, String password);
 }
