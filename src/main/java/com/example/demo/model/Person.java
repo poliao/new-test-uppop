@@ -36,9 +36,6 @@ public class Person {
     @Column(name = "lastname")
     private String lastName;
 
-    public Long getId() {
-        return idUser;
-    }
 
 
     // getters and setters

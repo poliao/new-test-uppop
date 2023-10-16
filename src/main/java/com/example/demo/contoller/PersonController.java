@@ -76,7 +76,7 @@ public class PersonController {
             Optional<Person> personOptional = Optional.ofNullable(personRepository.findByUsernameAndPassword(username, password));
 
             if (personOptional.isPresent()) {
-                Long userId = personOptional.get().getId();
+                Long userId = personOptional.get().getIdUser();
 
                 // Return user ID along with success message
                 return new ResponseEntity<>("Login successful. User ID: " + userId, HttpStatus.OK);
