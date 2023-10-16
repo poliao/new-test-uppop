@@ -30,9 +30,9 @@ public class ImageController {
             image.setFileName(file.getOriginalFilename());
 
             // บันทึกรูปลงในฐานข้อมูล
-            imageRepository.save(image);
+            final Image savedImage = imageRepository.save(image);
 
-            return ResponseEntity.ok("File uploaded successfully!");
+            return ResponseEntity.ok("File uploaded successfully! Image ID: " + savedImage.getId());
         } catch (IOException e) {
             return ResponseEntity.status(500).body("Error uploading file.");
         }

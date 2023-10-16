@@ -3,13 +3,16 @@ package com.example.demo.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 
 @Data
 @Entity
 public class Image {
 
+    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID_img")
     private Long id;
 
     @Lob
