@@ -76,7 +76,10 @@ public class PersonController {
             Optional<Person> personOptional = Optional.ofNullable(personRepository.findByUsernameAndPassword(username, password));
 
             if (personOptional.isPresent()) {
-                return new ResponseEntity<>("Login successful", HttpStatus.OK);
+                Long userId = personOptional.get().getId();
+
+                // Return user ID along with success message
+                return new ResponseEntity<>("Login successful. User ID: " + userId, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>("Invalid username or password", HttpStatus.UNAUTHORIZED);
             }
