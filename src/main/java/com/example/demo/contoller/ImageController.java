@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/images")
@@ -44,5 +45,10 @@ public class ImageController {
         return imageRepository.findById(id)
                 .map(image -> ResponseEntity.ok().body(image.getData()))
                 .orElse(ResponseEntity.notFound().build());
+    }
+    @GetMapping("/all")
+    public ResponseEntity<List<Image>> getAllImages() {
+        List<Image> images = (List<Image>) imageRepository.findAll();
+        return ResponseEntity.ok(images);
     }
 }
