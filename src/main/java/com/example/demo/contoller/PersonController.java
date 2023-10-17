@@ -4,7 +4,6 @@ package com.example.demo.contoller;
 import com.example.demo.model.Person;
 import com.example.demo.repository.PersonRepository;
 import jakarta.persistence.EntityNotFoundException;
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

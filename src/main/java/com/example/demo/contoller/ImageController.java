@@ -4,13 +4,16 @@ package com.example.demo.contoller;
 import com.example.demo.model.Image;
 import com.example.demo.repository.ImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.print.Pageable;
 import java.io.IOException;
 import java.util.List;
-
 @RestController
 @RequestMapping("/api/images")
 @CrossOrigin(origins = "http://localhost:8081")
@@ -46,9 +49,5 @@ public class ImageController {
                 .map(image -> ResponseEntity.ok().body(image.getData()))
                 .orElse(ResponseEntity.notFound().build());
     }
-    @GetMapping("/all")
-    public ResponseEntity<List<Image>> getAllImages() {
-        List<Image> images = (List<Image>) imageRepository.findAll();
-        return ResponseEntity.ok(images);
-    }
+
 }

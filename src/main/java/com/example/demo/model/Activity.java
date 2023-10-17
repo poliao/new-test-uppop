@@ -37,8 +37,6 @@ public class Activity {
     @Column(name = "nameactivity")
     private String nameActivity;
 
-    @Column(name = "category")
-    private String category;
 
     @ElementCollection
     @CollectionTable(name = "activity_detail", joinColumns = @JoinColumn(name = "activity_id"))
