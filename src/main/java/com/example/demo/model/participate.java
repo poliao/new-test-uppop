@@ -2,10 +2,12 @@ package com.example.demo.model;
 
 
 import jakarta.persistence.*;
+import lombok.Data;
 
-import java.util.Date;
+
 
 @Entity
+@Data
 @Table(name = "participate")
 public class participate {
 
