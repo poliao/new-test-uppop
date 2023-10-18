@@ -1,53 +1,62 @@
 package com.example.demo.contoller;
 
-
 import com.example.demo.model.Image;
 import com.example.demo.repository.ImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.awt.print.Pageable;
-import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/api/images")
-@CrossOrigin(origins = "http://localhost:8081")
 public class ImageController {
 
     @Autowired
     private ImageRepository imageRepository;
 
-    @PostMapping("/upload")
-    public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
-        try {
-            // อ่านข้อมูลจากไฟล์
-            byte[] imageData = file.getBytes();
-
-            // สร้าง Entity Image
-            Image image = new Image();
-            image.setData(imageData);
-            image.setFileName(file.getOriginalFilename());
-
-            // บันทึกรูปลงในฐานข้อมูล
-            final Image savedImage = imageRepository.save(image);
-
-            return ResponseEntity.ok("File uploaded successfully! Image ID: " + savedImage.getId());
-        } catch (IOException e) {
-            return ResponseEntity.status(500).body("Error uploading file.");
-        }
+    // Create
+    @PostMapping
+    public ResponseEntity<Image> createImage(@RequestBody Image image) {
+        Image savedImage = imageRepository.save(image);
+        return ResponseEntity.ok(savedImage);
     }
 
+    // Read All
+    @GetMapping
+    public ResponseEntity<List<Image>> getAllImages() {
+        List<Image> images = imageRepository.findAll();
+        return ResponseEntity.ok(images);
+    }
+
+    // Read One
     @GetMapping("/{id}")
-    public ResponseEntity<byte[]> getImage(@PathVariable Long id) {
-        // ดึงข้อมูลรูปจากฐานข้อมูล
-        return imageRepository.findById(id)
-                .map(image -> ResponseEntity.ok().body(image.getData()))
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<Image> getImageById(@PathVariable Long id) {
+        Optional<Image> imageOptional = imageRepository.findById(id);
+        return imageOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    // Update
+    @PutMapping("/{id}")
+    public ResponseEntity<Image> updateImage(@PathVariable Long id, @RequestBody Image updatedImage) {
+        if (!imageRepository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+
+        updatedImage.setId(id);
+        Image savedImage = imageRepository.save(updatedImage);
+        return ResponseEntity.ok(savedImage);
+    }
+
+    // Delete
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteImage(@PathVariable Long id) {
+        if (!imageRepository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+
+        imageRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
 }
