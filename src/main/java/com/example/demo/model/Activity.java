@@ -2,8 +2,11 @@ package com.example.demo.model;
 
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -43,10 +46,16 @@ public class Activity {
     @Column(name = "ID_img")
     private Long id_img;
 
-    @ElementCollection
-    @CollectionTable(name = "activity_detail", joinColumns = @JoinColumn(name = "activity_id"))
     @Column(name = "detail")
     private List<String> detail;
 
-    // getters and setters
+    @CreationTimestamp
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @Column(name = "id_admin")
+    private Long id_admin;
+
+    
+    
 }
